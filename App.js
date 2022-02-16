@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Button, LogBox, Image } from "react-native";
+import Navigation from "./Navigation";
 // import * as ImagePicker from "expo-image-picker";
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
+      <Navigation />
     </View>
   );
 }
@@ -26,7 +28,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
   },
 });

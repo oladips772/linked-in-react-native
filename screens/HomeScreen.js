@@ -1,14 +1,30 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+/** @format */
+import React from "react";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import FeedScreen from "./FeedScreen";
+import DetailsScreen from "./DetailsScreen";
+
+const Stack = createNativeStackNavigator();
+
+const HomeStackScreen = () => {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Feed"
+        component={FeedScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Details"
+        component={DetailsScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  );
+};
 
 const HomeScreen = () => {
-  return (
-    <View>
-      <Text>HomeScreen</Text>
-    </View>
-  )
-}
+  return <HomeStackScreen />;
+};
 
-export default HomeScreen
-
-const styles = StyleSheet.create({})
+export default HomeScreen;

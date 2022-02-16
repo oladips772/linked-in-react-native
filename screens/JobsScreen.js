@@ -9,6 +9,6 @@ const JobsScreen = () => {
   )
 }
 
-export default JobsScreen
+export default JobsScreen;
 
 const styles = StyleSheet.create({})

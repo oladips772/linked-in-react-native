@@ -1,5 +1,6 @@
 /** @format */
 import React from "react";
+import { StyleSheet, View } from "react-native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import FeedScreen from "./FeedScreen";
 import DetailsScreen from "./DetailsScreen";
@@ -24,7 +25,18 @@ const HomeStackScreen = () => {
 };
 
 const HomeScreen = () => {
-  return <HomeStackScreen />;
+  return (
+    <View style={styles.container}>
+      <HomeStackScreen />
+    </View>
+  );
 };
 
 export default HomeScreen;
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: "white",
+  },
+});

@@ -46,9 +46,21 @@ const Navigation = () => {
           component={HomeScreen}
           options={{ headerShown: false }}
         />
-        <Tab.Screen name="Create" component={CreatePost} />
-        <Tab.Screen name="People" component={PeopleScreen} />
-        <Tab.Screen name="Jobs" component={JobsScreen} />
+        <Tab.Screen
+          name="Create"
+          component={CreatePost}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="People"
+          component={PeopleScreen}
+          options={{ headerShown: false }}
+        />
+        <Tab.Screen
+          name="Jobs"
+          component={JobsScreen}
+          options={{ headerShown: false }}
+        />
       </Tab.Navigator>
     </NavigationContainer>
   );

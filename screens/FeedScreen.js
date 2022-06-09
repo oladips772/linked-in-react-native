@@ -10,6 +10,7 @@ import {
 import React from "react";
 import tw from "twrnc";
 import { Ionicons, Feather } from "@expo/vector-icons";
+import Post from "../components/Post";
 
 const FeedScreen = ({ navigation }) => {
   return (
@@ -30,10 +31,12 @@ const FeedScreen = ({ navigation }) => {
           style={tw`h-[30px] bg-blue-100 rounded-sm w-[230px] flex flex-row items-center`}
         >
           <Feather name="search" size={20} color="gray" style={tw`ml-2`} />
-          <Text style={tw`ml-4 text-gray-500`}>Search</Text>
+          <Text style={tw`ml-2 text-gray-500 font-bold`}>Search</Text>
         </View>
         <Ionicons name="ios-chatbox-ellipses" size={24} color="gray" />
       </View>
+      {/*  */}
+      <Post />
     </View>
   );
 };
@@ -49,8 +52,12 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginTop: 15,
+    marginTop: 18,
     paddingTop: 18,
     marginVertical: 18,
+    backgroundColor: "whitesmoke",
+    borderBottomColor: "lightgray",
+    borderBottomWidth: 1,
+    paddingBottom: 7,
   },
 });

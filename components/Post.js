@@ -71,7 +71,7 @@ const Post = () => {
           <TouchableOpacity style={styles.btnCont}>
             <FontAwesome
               name="thumbs-o-up"
-              size={21}
+              size={18}
               color="gray"
               style={tw`rounded-full p-1 mr-[2px]`}
             />
@@ -80,7 +80,7 @@ const Post = () => {
           <TouchableOpacity style={styles.btnCont}>
             <Feather
               name="corner-up-right"
-              size={21}
+              size={18}
               color="gray"
               style={tw`rounded-full p-1 mr-[2px]`}
             />
@@ -89,7 +89,7 @@ const Post = () => {
           <TouchableOpacity style={styles.btnCont}>
             <Ionicons
               name="ios-chatbox-ellipses"
-              size={21}
+              size={18}
               color="gray"
               style={tw`rounded-full p-1 mr-[2px]`}
             />
@@ -98,7 +98,7 @@ const Post = () => {
           <TouchableOpacity style={styles.btnCont}>
             <FontAwesome
               name="send"
-              size={20}
+              size={18}
               color="gray"
               style={tw`rounded-full p-1 mr-[2px]`}
             />
@@ -140,7 +140,8 @@ const styles = StyleSheet.create({
     borderTopWidth: 1,
     borderBottomColor: "lightgray",
     borderBottomWidth: 1,
-    paddingBottom: 7,
-    paddingTop: 7,
+    paddingBottom: 5,
+    paddingTop: 5,
   },
 });
+ 

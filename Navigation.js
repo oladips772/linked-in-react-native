@@ -26,7 +26,7 @@ const Navigation = () => {
             } else if (route.name === "Create") {
               iconName = focused ? "add-circle" : "add-circle";
               Size = focused ? 29 : 20;
-            } else if (route.name === "People") {
+            } else if (route.name === "Network") {
               iconName = focused ? "ios-people" : "ios-people";
               Size = focused ? 29 : 20;
             }
@@ -52,7 +52,7 @@ const Navigation = () => {
           options={{ headerShown: false }}
         />
         <Tab.Screen
-          name="People"
+          name="Network"
           component={PeopleScreen}
           options={{ headerShown: false }}
         />

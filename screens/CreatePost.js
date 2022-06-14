@@ -32,9 +32,11 @@ const CreatePost = ({ navigation }) => {
       >
         <View style={tw`flex-row items-center space-x-6`}>
           <TouchableOpacity style={tw`p-2`} onPress={() => navigation.goBack()}>
-            <AntDesign name="close" size={24} />
+            <AntDesign name="close" size={24} style={tw`text-gray-700`} />
           </TouchableOpacity>
-          <Text style={tw`text-lg font-bold ml-4`}>Share post</Text>
+          <Text style={tw`text-lg font-bold ml-4 text-gray-700`}>
+            Share post
+          </Text>
         </View>
         <TouchableOpacity>
           <Text style={tw`text-lg font-bold mr-2 p-2 text-gray-500`}>Post</Text>
@@ -58,7 +60,7 @@ const CreatePost = ({ navigation }) => {
           </Text>
           <View style={styles.global}>
             <Entypo name="globe" size={13} color="gray" />
-            <Text style={tw`text-sm font-bold`}>Anyone</Text>
+            <Text style={tw`text-sm font-bold text-gray-700`}>Anyone</Text>
             <AntDesign name="caretdown" size={13} color="gray" />
           </View>
         </View>

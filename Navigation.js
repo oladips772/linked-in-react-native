@@ -1,13 +1,16 @@
 /** @format */
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import HomeScreen from "./screens/HomeScreen";
 import JobsScreen from "./screens/JobsScreen";
 import { Ionicons } from "@expo/vector-icons";
 import CreatePost from "./screens/CreatePost";
 import PeopleScreen from "./screens/PeopleScreen";
+import LoginScreen from "./screens/LoginScreen";
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
   return (
@@ -66,4 +69,14 @@ const Navigation = () => {
   );
 };
 
-export default Navigation;
+const SignedOutStack = () => {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen name="Login" component={LoginScreen} />
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
+};
+
+export { Navigation, SignedOutStack };

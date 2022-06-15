@@ -2,11 +2,12 @@
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Button, LogBox, Image } from "react-native";
-import Navigation from "./Navigation";
+import { Navigation, SignedOutStack } from "./Navigation";
 // import * as ImagePicker from "expo-image-picker";
 
 export default function App() {
-  // const [imagee, setImagee] = useState(null);
+  const user = 0;
+  // const [image, setImage] = useState(null);
 
   // let selectFile = async () => {
   //   let pickerResult = await ImagePicker.launchImageLibraryAsync();
@@ -19,7 +20,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <Navigation />
+      {user ? <Navigation /> : <SignedOutStack />}
     </View>
   );
 }

@@ -78,7 +78,7 @@ const CreatePost = ({ navigation }) => {
             width: "100%",
             height: 320,
             resizeMode: "cover",
-            marginBottom: 270,
+            marginBottom: 300,
           }}
           source={{
             uri: "https://pbs.twimg.com/media/FRDSv8eVEAATjS7?format=jpg&name=large",
@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
   bottom: {
     position: "absolute",
     width: "100%",
-    bottom: 98,
+    top: 615,
     flexDirection: "column",
     zIndex: 999,
     backgroundColor: "whitesmoke",

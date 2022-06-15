@@ -7,6 +7,7 @@ import { Navigation, SignedOutStack } from "./Navigation";
 
 export default function App() {
   const user = 0;
+  // const user = useAuthState();
   // const [image, setImage] = useState(null);
 
   // let selectFile = async () => {

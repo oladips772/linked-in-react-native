@@ -1,18 +1,22 @@
 /** @format */
-import {
-  StyleSheet,
-  Text,
-  View,
-  Button,
-  ScrollView,
-  Image,
-} from "react-native";
-import React from "react";
+import { StyleSheet, Text, View, Image } from "react-native";
+import { useEffect, useState } from "react";
 import tw from "twrnc";
 import { Ionicons, Feather } from "@expo/vector-icons";
 import Post from "../components/Post";
+import { auth } from "../firebase";
 
-const FeedScreen = ({ navigation }) => {
+const FeedScreen = () => {
+  const user = auth.currentUser;
+  const [userImage, setUserImage] = useState("");
+  console.log(user);
+
+  useEffect(() => {
+    if (user) {
+      setUserImage(user.photoURL);
+    }
+  }, [user, auth]);
+
   return (
     <View style={styles.container}>
       {/* header view */}
@@ -24,7 +28,9 @@ const FeedScreen = ({ navigation }) => {
             borderRadius: 50,
           }}
           source={{
-            uri: "https://avatars.githubusercontent.com/u/6589966?v=4",
+            uri: user
+              ? userImage
+              : "https://www.kindpng.com/picc/m/207-2074624_white-gray-circle-avatar-png-transparent-png.png",
           }}
         />
         <View

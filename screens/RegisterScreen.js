@@ -17,7 +17,6 @@ import { useState, useEffect } from "react";
 import { auth, storage } from "../firebase";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import axios from "axios";
 
 const RegisterScreen = ({ navigation }) => {
   const [image, setImage] = useState("");
@@ -27,72 +26,11 @@ const RegisterScreen = ({ navigation }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  let selectFile = async () => {
-    let pickerResult = await ImagePicker.launchImageLibraryAsync();
-    setImage(pickerResult.uri);
+  const createUser = async () => {
+    await createUserWithEmailAndPassword(auth, email, password).catch((err) =>
+      alert(err)
+    );
   };
-
-  const handleCreate = async () => {
-    const blob = await new Promise((resolve, reject) => {
-      const xhr = new XMLHttpRequest();
-      xhr.onload = function () {
-        resolve(xhr.response);
-      };
-      xhr.onerror = function (e) {
-        console.log(e);
-        reject(new TypeError("Network request failed"));
-      };
-      xhr.responseType = "blob";
-      xhr.open("GET", image, true);
-      xhr.send(null);
-    });
-
-    if (!image) return;
-    const data = new FormData();
-    data.append("file", blob);
-    data.append("upload_preset", "uploads");
-    try {
-      const uploadRes = await axios.post(
-        "https://api.cloudinary.com/v1_1/dsbhrtd0o/image/upload",
-        data
-      );
-      const { url } = uploadRes.data;
-      setUserImage(url);
-      console.log(uploadRes.data);
-    } catch (err) {
-      console.log(err);
-      err && alert(`${err.message}, reselect the image please`);
-    }
-    console.log(userImage);
-  };
-
-  useEffect(() => {
-    if (image) {
-      handleCreate();
-    }
-  }, [image]);
-
-  async function createUser() {
-    if (!userImage) {
-      alert("Please select an image");
-      return;
-    }
-
-    if (!name && title) {
-      alert("fill all fields");
-      return;
-    }
-
-    await createUserWithEmailAndPassword(auth, email, password)
-      .then((user) => {
-        updateProfile(user, {
-          displayName: name,
-          photoURL: userImage,
-          title: title,
-        });
-      })
-      .catch((err) => alert(err));
-  }
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior={"height"}>
@@ -117,27 +55,7 @@ const RegisterScreen = ({ navigation }) => {
             }}
           />
           {/* profile image view */}
-          <View style={tw`flex items-center m-2`}>
-            <TouchableOpacity onPress={selectFile}>
-              <Image
-                source={{
-                  uri: image
-                    ? image
-                    : "https://www.kindpng.com/picc/m/207-2074624_white-gray-circle-avatar-png-transparent-png.png",
-                }}
-                style={tw`rounded-full w-[90px] h-[90px] object-contain m-2`}
-              />
-            </TouchableOpacity>
-            <Text style={tw`font-bold text-gray-700`}>
-              Select profile image
-            </Text>
-          </View>
           <View style={tw`text-center mt-6`}>
-            <TextInput placeholder="Full Name" style={styles.input} />
-            <TextInput
-              placeholder="Title(Developer / UI-Designer / Analyst)"
-              style={styles.input}
-            />
             <TextInput
               placeholder="Email"
               style={styles.input}

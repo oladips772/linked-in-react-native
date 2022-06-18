@@ -5,6 +5,7 @@ import { StyleSheet, Text, View, Button, LogBox, Image } from "react-native";
 import { Navigation, SignedOutStack } from "./Navigation";
 import { auth } from "./firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import { NavigationContainer } from "@react-navigation/native";
 
 export default function App() {
   const [currentUser, setCurrentUser] = useState(null);
@@ -23,10 +24,12 @@ export default function App() {
 
   LogBox.ignoreAllLogs();
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      {currentUser ? <Navigation /> : <SignedOutStack />}
-    </View>
+    <NavigationContainer>
+      <View style={styles.container}>
+        <StatusBar style="auto" />
+        {currentUser ? <Navigation /> : <SignedOutStack />}
+      </View>
+    </NavigationContainer>
   );
 }
 

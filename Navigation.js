@@ -8,6 +8,7 @@ import { Ionicons } from "@expo/vector-icons";
 import CreatePost from "./screens/CreatePost";
 import PeopleScreen from "./screens/PeopleScreen";
 import LoginScreen from "./screens/LoginScreen";
+import RegisterScreen from "./screens/RegisterScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
@@ -76,6 +77,11 @@ const SignedOutStack = () => {
         <Stack.Screen
           name="Login"
           component={LoginScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Register"
+          component={RegisterScreen}
           options={{ headerShown: false }}
         />
       </Stack.Navigator>

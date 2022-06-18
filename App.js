@@ -1,27 +1,31 @@
 /** @format */
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Button, LogBox, Image } from "react-native";
 import { Navigation, SignedOutStack } from "./Navigation";
-// import * as ImagePicker from "expo-image-picker";
+import { auth } from "./firebase";
+import { onAuthStateChanged } from "firebase/auth";
 
 export default function App() {
-  const user = 0;
-  // const user = useAuthState();
-  // const [image, setImage] = useState(null);
+  const [currentUser, setCurrentUser] = useState(null);
 
-  // let selectFile = async () => {
-  //   let pickerResult = await ImagePicker.launchImageLibraryAsync();
-  //   console.log(pickerResult);
-
-  //   setImagee({ localUri: pickerResult.uri });
-  // };
+  useEffect(
+    () =>
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          setCurrentUser(user);
+        } else {
+          setCurrentUser(null);
+        }
+      }),
+    [currentUser, auth]
+  );
 
   LogBox.ignoreAllLogs();
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      {user ? <Navigation /> : <SignedOutStack />}
+      {currentUser ? <Navigation /> : <SignedOutStack />}
     </View>
   );
 }

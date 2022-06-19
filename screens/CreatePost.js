@@ -18,10 +18,63 @@ import {
   Ionicons,
 } from "@expo/vector-icons";
 import tw from "twrnc";
+import { auth, db, storage } from "../firebase";
+import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import * as ImagePicker from "expo-image-picker";
+import {
+  addDoc,
+  collection,
+  serverTimestamp,
+  updateDoc,
+} from "firebase/firestore";
 
 const CreatePost = ({ navigation }) => {
   const [image, setImage] = useState(null);
-  const [message, setMessage] = useState(null);
+  const [message, setMessage] = useState("");
+  const user = auth.currentUser;
+
+  const pickImageHandler = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync();
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+
+  const createPost = async () => {
+    const postRef = await addDoc(collection(db, "posts"), {
+      message: message,
+      time: serverTimestamp(),
+      userName: user.displayName,
+      userImage: user.photoURL,
+      userEmail: user.email,
+    });
+
+    if (image) {
+      const blob = await new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.onload = function () {
+          resolve(xhr.response);
+        };
+        xhr.onerror = function (e) {
+          console.log(e);
+          reject(new TypeError("Network request failed"));
+        };
+        xhr.responseType = "blob";
+        xhr.open("GET", image, true);
+        xhr.send(null);
+      });
+
+      const imageRef = ref(storage, `posts/${postRef.id}/images`);
+      await uploadBytes(imageRef, blob, {
+        contentType: "image/jpeg",
+      });
+      await updateDoc(postRef, {
+        postImage: await getDownloadURL(imageRef),
+      });
+    }
+    setMessage("");
+    setImage(null);
+  };
 
   return (
     <View>
@@ -38,8 +91,14 @@ const CreatePost = ({ navigation }) => {
             Share post
           </Text>
         </View>
-        <TouchableOpacity>
-          <Text style={tw`text-lg font-bold mr-2 p-2 text-gray-500`}>Post</Text>
+        <TouchableOpacity onPress={createPost} disabled={!message.trim()}>
+          <Text
+            style={tw`text-lg font-bold mr-2 p-2 ${
+              message.trim() || image ? "text-blue-600" : "text-gray-500"
+            }`}
+          >
+            Post
+          </Text>
         </TouchableOpacity>
       </View>
       {/* user info */}
@@ -51,12 +110,14 @@ const CreatePost = ({ navigation }) => {
             borderRadius: 50,
           }}
           source={{
-            uri: "https://avatars.githubusercontent.com/u/6589966?v=4",
+            uri: user
+              ? user?.photoURL
+              : "https://www.kindpng.com/picc/m/207-2074624_white-gray-circle-avatar-png-transparent-png.png",
           }}
         />
         <View style={tw`flex items-start ml-2`}>
-          <Text style={tw`font-bold text-[14px] text-gray-700`}>
-            NAZARY DAMUNSAKI
+          <Text style={tw`font-bold text-[18px] text-gray-700`}>
+            {user.displayName}
           </Text>
           <View style={styles.global}>
             <Entypo name="globe" size={13} color="gray" />
@@ -72,18 +133,22 @@ const CreatePost = ({ navigation }) => {
           placeholder="What do you want to talk about?"
           multiline={true}
           placeholderTextColor="gray"
+          value={message}
+          onChangeText={(val) => setMessage(val)}
         />
-        <Image
-          style={{
-            width: "100%",
-            height: 320,
-            resizeMode: "cover",
-            marginBottom: 300,
-          }}
-          source={{
-            uri: "https://pbs.twimg.com/media/FRDSv8eVEAATjS7?format=jpg&name=large",
-          }}
-        />
+        {image && (
+          <Image
+            style={{
+              width: "100%",
+              height: 320,
+              resizeMode: "cover",
+              marginBottom: 300,
+            }}
+            source={{
+              uri: image,
+            }}
+          />
+        )}
       </ScrollView>
       {/* contoll view */}
       <View style={styles.bottom}>
@@ -98,7 +163,7 @@ const CreatePost = ({ navigation }) => {
             <TouchableOpacity>
               <Ionicons name="videocam" size={23} color="gray" />
             </TouchableOpacity>
-            <TouchableOpacity>
+            <TouchableOpacity onPress={pickImageHandler}>
               <FontAwesome5 name="image" size={23} color="gray" />
             </TouchableOpacity>
             <TouchableOpacity>
